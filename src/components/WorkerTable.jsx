@@ -46,7 +46,7 @@ export default function WorkerTable() {
 
   useEffect(() => {
     loadWorkers();
-  }, []); // korrekt – nicht ändern
+  }, []);
 
   return (
     <div style={{ marginTop: 30 }}>

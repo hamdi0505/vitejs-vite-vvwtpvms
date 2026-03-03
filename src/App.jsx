@@ -25,15 +25,12 @@ export default function App() {
             Ausgewählt: {selectedMonth.month}/{selectedMonth.year}
           </p>
 
-          <ClosedDaysTable
-            month={selectedMonth.month}
-            year={selectedMonth.year}
-          />
-
-          <PlanGenerator
-            month={selectedMonth.month}
-            year={selectedMonth.year}
-          />
+          
+<ClosedDaysTable
+  key={`${selectedMonth.year}-${selectedMonth.month}`}
+  month={selectedMonth.month}
+  year={selectedMonth.year}
+/>
         </>
       )}
 
