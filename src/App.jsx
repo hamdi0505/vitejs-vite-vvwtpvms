@@ -1,42 +1,29 @@
-import { useState } from "react";
-import WorkerTable from "./components/WorkerTable";
-import MonthSelector from "./components/MonthSelector";
-import ClosedDaysTable from "./components/ClosedDaysTable";
-import SickDaysManager from "./components/SickDaysManager";
-import WeekdaySettings from "./components/WeekdaySettings";
-import PlanGenerator from "./components/PlanGenerator";
+import { useEffect } from 'react'
+import { supabase } from './services/supabaseClient'
 
-export default function App() {
-  const [selectedMonth, setSelectedMonth] = useState(null);
+function App() {
 
-  function handleMonthChange(month, year) {
-    setSelectedMonth({ month, year });
-  }
+  useEffect(() => {
+    const testConnection = async () => {
+      const { data, error } = await supabase
+        .from('workers')
+        .select('*')
+
+      if (error) {
+        console.error('Supabase Fehler:', error)
+      } else {
+        console.log('Supabase Verbindung OK:', data)
+      }
+    }
+
+    testConnection()
+  }, [])
 
   return (
-    <div style={{ padding: 20, fontFamily: "Arial" }}>
-      <h1>Monatsplan</h1>
-
-      <MonthSelector onChange={handleMonthChange} />
-
-      {selectedMonth && (
-        <>
-          <p>
-            Ausgewählt: {selectedMonth.month}/{selectedMonth.year}
-          </p>
-
-          
-<ClosedDaysTable
-  key={`${selectedMonth.year}-${selectedMonth.month}`}
-  month={selectedMonth.month}
-  year={selectedMonth.year}
-/>
-        </>
-      )}
-
-      <WorkerTable />
-      <SickDaysManager />
-      <WeekdaySettings />
+    <div>
+      <h1>Dienstplan App</h1>
     </div>
-  );
+  )
 }
+
+export default App
