@@ -1,28 +1,25 @@
-import { useEffect } from 'react'
-import { supabase } from './lib/supabaseClient'
+import { useEffect } from "react"
+import { testConnection } from "./services/supabaseService"
 
 function App() {
 
   useEffect(() => {
-    const testConnection = async () => {
-      const { data, error } = await supabase
-        .from('workers')
-        .select('*')
-
-      if (error) {
-        console.error('Supabase Fehler:', error)
-      } else {
-        console.log('Supabase Verbindung OK:', data)
+    const runTest = async () => {
+      try {
+        const data = await testConnection()
+        console.log("Supabase Verbindung OK:", data)
+      } catch (err) {
+        console.error("Supabase Fehler:", err)
       }
     }
 
-    testConnection()
+    runTest()
   }, [])
 
   return (
-    <div>
-      <h1>Dienstplan App</h1>
-    </div>
+    <>
+      <h1>Test läuft...</h1>
+    </>
   )
 }
 
